@@ -1,83 +1,164 @@
-RAG-Enhanced Generative AI-Based Resume and Job Description Analysis System
+# ResumeX AI — Advanced Resume & Job Description Analysis Platform
 
-📌 About the Project
+An enterprise-grade, Generative AI-powered Career Guidance and ATS Resume Optimization Platform. Powered by Python, Flask, Google Gemini AI (`gemini-3.8-flash`), SQLite, React.js, Tailwind CSS, `pypdf`, `python-docx`, Tesseract OCR, and ReportLab.
 
-This project is an AI-powered resume analysis system that helps students and job seekers evaluate how well their resumes match specific job descriptions. It uses Generative AI, Retrieval-Augmented Generation (RAG), and ATS-based scoring to identify matching skills, highlight skill gaps, and provide personalized career recommendations.
+---
 
-🎯 Objectives
+## 🚀 Newly Completed Upgrade Features
 
-- Analyze resumes against job descriptions.
-- Identify matching and missing technical skills.
-- Generate an estimated ATS compatibility score.
-- Provide personalized resume improvement suggestions.
-- Generate interview questions based on job requirements.
-- Recommend learning paths to improve employability.
+1. **Advanced ATS Resume Analysis & Scoring Methodology**:
+   - Computes an Overall ATS Compatibility Score (0–100) alongside 5 dimensional sub-scores:
+     - **Job Description Matching Score**
+     - **Technical Skills Coverage Score**
+     - **Experience Relevance & Seniority Score**
+     - **Education & Credentials Alignment Score**
+     - **Keyword Density & Parse-Readiness Score**
+   - Readability index, bullet point structure review, action-verb density rating, and ATS formatting danger flags.
+   - Transparent scoring methodology note clarifying scores as evidence-based heuristic estimates.
 
-🚀 Key Features
+2. **Advanced 4-Way Skill Gap Analysis**:
+   - **Matching Skills**: Demonstrated and verified skills.
+   - **Missing Skills**: Deep-dive learning breakdown (Why it matters, 3-4 study topics, practical mini-projects, and Beginner/Intermediate/Advanced learning levels).
+   - **Partially Matching Skills**: Adjacent or foundational skills that need deepening.
+   - **Additional Skills**: Value-add candidate strengths beyond the JD.
+   - **Evidentiary Integrity Guarantee**: Strict rule preventing AI from hallucinating skills not present in the candidate resume.
 
-- Resume Upload: Upload resumes in PDF or DOCX format.
-- Resume Parsing: Extract relevant information from uploaded documents.
-- AI-Powered Analysis: Use Gemini AI to understand resume content and job requirements.
-- RAG Integration: Retrieve relevant information using embeddings and a vector database.
-- ATS Score: Calculate an estimated resume compatibility score.
-- Skill Gap Analysis: Identify matching, partially matching, and missing skills.
-- Resume Improvement: Generate suggestions to improve resume content.
-- Interview Preparation: Generate job-related interview questions.
-- Career Guidance: Provide personalized learning recommendations.
+3. **AI Resume Section Rewriter (`/api/improve-section`)**:
+   - Rewrites specific sections: Professional Summary, Career Objective, Technical Skills, Work Experience, Academic Projects, and Certifications.
+   - Generates high-impact, ATS-friendly action bullets following Google XYZ formula without fabricating credentials.
 
-🛠️ Technologies Used
+4. **Multi-Job Description Comparison (`/api/compare-jobs`)**:
+   - Compares 1 candidate resume simultaneously against 2 to 5 job openings.
+   - Displays comparative match percentages, skill alignment matrices, and a **Recommended Best Match Opportunity** banner.
 
-Category| Technologies
-Frontend| React.js, HTML, CSS, JavaScript
-Backend| Python, Flask
-Generative AI| Google Gemini API
-RAG Framework| LangChain
-Vector Database| ChromaDB
-Embeddings| Gemini Embedding Model
-Document Processing| PyPDF, Tesseract OCR
-Database| SQLite
-Environment Management| Python dotenv
+5. **Personalized Career Learning Roadmap**:
+   - Sequential, step-by-step learning milestones to bridge missing skill gaps with learning goals, exercises, mini-projects, and time estimates (e.g., "1-2 weeks").
 
-🏗️ System Architecture
+6. **Advanced Categorized Interview Preparation**:
+   - Questions categorized into: Technical, HR, Scenario-Based, Project-Based, and Behavioral.
+   - Difficulty ratings: Easy, Medium, Hard.
+   - Suggested answer strategies, essential concepts to mention, and potential follow-up questions.
 
-1. User uploads a resume and enters a job description.
-2. The Flask backend extracts text from the uploaded resume.
-3. Extracted text is divided into smaller chunks.
-4. Embeddings are generated and stored in ChromaDB.
-5. The RAG pipeline retrieves relevant information.
-6. Gemini AI analyzes the retrieved information and generates insights.
-7. The Python ATS engine calculates an estimated compatibility score.
-8. Results are displayed through the React frontend.
+7. **User Authentication & Role-Based Access Control**:
+   - Secure student registration, login, and session management.
+   - Password hashing via PBKDF2/sha256 (`werkzeug.security`).
+   - Signed JWT tokens (`pyjwt` / `python-jose`).
+   - Private student data isolation (users only access their own uploaded resumes and reports).
 
-📊 Expected Output
+8. **Analysis History & Saved Reports Database**:
+   - SQLite database (`resume_analyzer.db`) designed for easy PostgreSQL migration.
+   - Filter tabs: **All Analyses**, **Recent Analyses**, **Saved/Bookmarked Reports**.
+   - Re-open previous analyses directly into the active dashboard with 1 click.
 
-- Resume analysis report.
-- ATS compatibility score.
-- Matching and missing skills.
-- Resume improvement suggestions.
-- Interview questions and answers.
-- Personalized career learning roadmap.
+9. **Downloadable Professional PDF Reports (`/api/report/<id>/download`)**:
+   - Polished multi-page PDF generation via ReportLab.
+   - Includes executive summary, ATS dimensional breakdown table, skills matrix, missing skill study guides, personalized learning roadmap, and interview prep questions.
 
-💡 Advantages
+10. **Admin Dashboard & Monitoring (`/api/admin/stats`)**:
+    - Platform telemetry: Total students, total analyses run, unique resumes, last 24h activity.
+    - User management: Enable or disable student accounts.
+    - System activity audit log (with privacy safeguards that protect raw resume text).
 
-- Reduces manual resume screening effort.
-- Provides context-aware resume analysis.
-- Helps candidates understand their skill gaps.
-- Supports better resume preparation.
-- Provides personalized career guidance.
+11. **Expanded File Format Support**:
+    - **PDF**: Digital extraction via `pypdf`, with automated fallback to **Tesseract OCR** (`pdf2image` + `pytesseract`) for scanned resumes.
+    - **DOCX**: Complete parsing of paragraphs, tables, and headers via `python-docx`.
+    - Strict file validation: size limit (16 MB), extension check, and prompt-injection sanitization.
 
-🔮 Future Enhancements
+12. **Modern SaaS UI/UX**:
+    - Interactive sidebar and top navigation.
+    - Light / Dark theme toggle.
+    - Drag-and-drop file upload with animated AI processing indicators.
+    - Built-in zero-dependency React 18 interface in `templates/index.html` (served directly by Flask) AND standalone Vite React app in `frontend/`.
 
-- Integration with job portals.
-- AI-powered mock interview system.
-- Multiple resume comparison.
-- Multilingual resume analysis.
-- Advanced career recommendation system.
+---
 
-👨‍💻 Project Status
+## 📂 Project Structure
 
-Academic project developed as part of the Generative AI subject. Features are being implemented and tested.
+```text
+bhavass/
+├── app.py                  # Main Flask application & enterprise REST endpoints
+├── ai_service.py           # Gemini Flash AI engine (ATS, Rewriter, Multi-Job, Roadmap)
+├── resume_parser.py        # Advanced parser (pypdf, Tesseract OCR, python-docx)
+├── database.py             # SQLite data layer (Users, Analyses, MultiJob, ActivityLogs)
+├── auth.py                 # JWT token management & RBAC decorators (@token_required)
+├── report_generator.py     # Multi-page PDF report generation with ReportLab
+├── resume_analyzer.db      # SQLite database file (auto-initialized)
+├── requirements.txt        # Updated Python package specifications
+├── .env.example            # Environment variable template
+├── .env                    # Local credentials & config (GEMINI_API_KEY)
+├── test_ai.py              # AI service unit tests
+├── test_api.py             # Flask API integration tests
+├── test_auth_db.py         # Authentication, database, and PDF report tests
+├── templates/
+│   └── index.html          # Full-featured responsive React 18 UI served directly
+└── frontend/               # Standalone Vite + React 18 project
+    ├── package.json
+    ├── vite.config.js
+    ├── tailwind.config.js
+    ├── postcss.config.js
+    ├── index.html
+    └── src/
+        ├── App.jsx         # Modular React UI
+        ├── index.css
+        └── main.jsx
+```
 
-📄 License
+---
 
-This project is developed for educational and academic purposes.
+## 🛠️ Installation & Execution Guide
+
+### 1. Configure Environment
+Check `.env`:
+```env
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+GEMINI_MODEL=gemini-3.8-flash
+PORT=5000
+FLASK_DEBUG=True
+JWT_SECRET_KEY=resumex-super-secret-jwt-key-2026
+DEFAULT_ADMIN_EMAIL=admin@resumex.ai
+DEFAULT_ADMIN_PASSWORD=Admin@123
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Backend & Web Application
+```bash
+python app.py
+```
+Open your browser at:
+👉 **`http://localhost:5000`**
+
+### 4. Default Test Credentials
+- **Administrator**: `admin@resumex.ai` / `Admin@123`
+- Or register any new student account directly in the UI modal.
+
+---
+
+## 🧪 Testing Results
+
+All 17 tests across three test suites passed with 100% success:
+
+```bash
+pytest
+```
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.12.0rc3, pytest-8.3.5
+collected 17 items
+
+test_ai.py ......                                                        [ 35%]
+test_api.py ......                                                       [ 70%]
+test_auth_db.py .....                                                    [100%]
+
+============================= 17 passed in 4.27s ==============================
+```
+
+---
+
+## ⚠️ Remaining Limitations
+
+1. **Scanned PDF OCR Dependency**: OCR fallback requires local installation of Tesseract and Poppler on the system `PATH`. Digital PDFs and DOCX files require no external software.
+2. **Gemini API Network & Quotas**: Real-time AI analysis requires an active internet connection and a valid API key with sufficient quota on Google AI Studio.

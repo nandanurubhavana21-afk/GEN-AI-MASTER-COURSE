@@ -1,0 +1,50 @@
+# ==========================================
+# Environments & Sensitive Credentials
+# ==========================================
+.env
+.env.local
+*.env
+
+# ==========================================
+# Python Artifacts & Caches
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+venv/
+.venv/
+env/
+ENV/
+
+# ==========================================
+# SQLite Database & Runtime Logs
+# ==========================================
+resume_analyzer.db
+*.sqlite3
+*.log
+
+# ==========================================
+# Node.js & Frontend Artifacts
+# ==========================================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.npm
+
+# ==========================================
+# Editor & OS Artifacts
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
